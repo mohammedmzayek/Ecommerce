@@ -1,7 +1,7 @@
 import Navbar from "../navbar/Navbar.jsx";
 import Footer from "../footer/Footer.jsx";
 import PropTypes from "prop-types";
-
+//new update
 function Layout({ children }) {
   return (
     <div>
