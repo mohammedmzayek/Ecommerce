@@ -1,12 +1,29 @@
+import { useState } from "react";
+import PropTypes from "prop-types";
 import myContext from "./myContext";
-function myState(props) {
-  const state = {
-    name: "Kamal Nayan",
-    class: "9 C",
+
+function MyState(props) {
+  const [mode, setMode] = useState("light");
+
+  const toggleMode = () => {
+    if (mode === "light") {
+      setMode("dark");
+      document.body.style.backgroundColor = "rgb(17,24,39)";
+    } else {
+      setMode("light");
+      document.body.style.backgroundColor = "white";
+    }
   };
+
   return (
-    <myContext.Provider value={state}>{props.children}</myContext.Provider>
+    <myContext.Provider value={{ mode, toggleMode }}>
+      {props.children}
+    </myContext.Provider>
   );
 }
 
-export default myState;
+MyState.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default MyState;
