@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 import Home from "./pages/home/Home.jsx";
 import Order from "./pages/order/Order.jsx";
@@ -9,6 +14,11 @@ import MyState from "./context/data/myState.jsx";
 import Login from "./pages/registration/Login";
 import Signup from "./pages/registration/Signup.jsx";
 import ProductInfo from "./pages/prodcutInfo/ProductInfo.jsx";
+import AddProduct from "./pages/admin/Pages/AddProduct.jsx";
+import UpdateProduct from "./pages/admin/Pages/UpdateProduct.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PropTypes from "prop-types";
 
 function App() {
   return (
@@ -16,18 +26,76 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/order"
+            element={
+              <ProtectedRoutes>
+                <Order />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutesForAdmin>
+                <Dashboard />
+              </ProtectedRoutesForAdmin>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/productinfo" element={<ProductInfo />} />
+          <Route
+            path="/addproduct"
+            element={
+              <ProtectedRoutesForAdmin>
+                <AddProduct />
+              </ProtectedRoutesForAdmin>
+            }
+          />
+          <Route
+            path="/updateproduct"
+            element={
+              <ProtectedRoutesForAdmin>
+                <UpdateProduct />
+              </ProtectedRoutesForAdmin>
+            }
+          />
           <Route path="/cart" element={<Cart />} />
-
           <Route path="/*" element={<NoPage />} />
         </Routes>
+        <ToastContainer />
       </Router>
     </MyState>
   );
 }
 
 export default App;
+
+// user
+
+export const ProtectedRoutes = ({ children }) => {
+  if (localStorage.getItem("currentUser")) {
+    return children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+ProtectedRoutes.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+// Admin
+export const ProtectedRoutesForAdmin = ({ children }) => {
+  const admin = JSON.parse(localStorage.getItem("user"));
+  console.log(admin.user.email);
+  if (admin.user.email === "admin123@outlook.com") {
+    return children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+ProtectedRoutesForAdmin.propTypes = {
+  children: PropTypes.node.isRequired,
+};

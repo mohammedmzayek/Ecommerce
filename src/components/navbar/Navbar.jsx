@@ -11,6 +11,11 @@ export default function Navbar() {
 
   const context = useContext(myContext);
   const { toggleMode, mode } = context;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const logout = () => {
+    localStorage.clear("user");
+    window.location.href = "/";
+  };
 
   return (
     <div className="bg-white sticky top-0 z-50  ">
@@ -64,43 +69,57 @@ export default function Navbar() {
                   >
                     All Products
                   </Link>
-                  <div className="flow-root">
-                    <Link
-                      to={"/order"}
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Order
-                    </Link>
-                  </div>
 
-                  <div className="flow-root">
-                    <Link
-                      to={"/dashboard"}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      admin
-                    </Link>
-                  </div>
+                  {user ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/order"}
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Order
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    <a
-                      className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      Logout
-                    </a>
-                  </div>
+                  {user?.user?.email === "admin123@outlook.com" ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/dashboard"}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        admin
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  {user ? (
+                    <div className="flow-root">
+                      <a
+                        onClick={logout}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div className="flow-root">
                     <Link
                       to={"/"}
                       className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
                     >
                       <img
-                        className="inline-block w-10 h-10 rounded-full"
-                        src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                        alt="Dan_Abromov"
+                        src="https://cdn.britannica.com/50/4550-004-7B368E09/Flag-Syria.jpg"
+                        alt=""
+                        className="block h-auto w-5 flex-shrink-0"
                       />{" "}
                     </Link>
                   </div>
@@ -109,15 +128,16 @@ export default function Navbar() {
                 <div className="border-t border-gray-200 px-4 py-6">
                   <a href="#" className="-m-2 flex items-center p-2">
                     <img
-                      src="img/indiaflag.png"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
+                      className="inline-block w-10 h-10 rounded-full"
+                      src="https://w7.pngwing.com/pngs/304/305/png-transparent-man-with-formal-suit-illustration-web-development-computer-icons-avatar-business-user-profile-child-face-web-design.png"
+                      alt="Dan_Abromov"
                     />
+
                     <span
                       className="ml-3 block text-base font-medium text-gray-900"
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      INDIA
+                      Syria
                     </span>
                     <span className="sr-only">, change currency</span>
                   </a>
@@ -199,27 +219,46 @@ export default function Navbar() {
                   >
                     All Products
                   </Link>
-                  <Link
-                    to={"/order"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Order
-                  </Link>
-                  <Link
-                    to={"/dashboard"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Admin
-                  </Link>
+                  {user ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/order"}
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Order
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {user?.user?.email === "admin123@outlook.com" ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/dashboard"}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        admin
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <a
-                    className="text-sm font-medium text-gray-700 cursor-pointer  "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Logout
-                  </a>
+                  {user ? (
+                    <div className="flow-root">
+                      <a
+                        onClick={logout}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
