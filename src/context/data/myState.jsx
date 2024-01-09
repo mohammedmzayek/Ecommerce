@@ -5,6 +5,7 @@ import {
   Timestamp,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   orderBy,
@@ -95,6 +96,7 @@ function MyState(props) {
   useEffect(() => {
     getProductData();
   }, []);
+
   const edithandle = (item) => {
     setProducts(item);
   };
@@ -104,25 +106,27 @@ function MyState(props) {
     try {
       await setDoc(doc(fireDB, "products", products.id), products);
       toast.success("Product Updated successfully");
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 800);
       getProductData();
       setLoading(false);
-      window.location.href = "/dashboard";
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
     setProducts("");
   };
-  // Delete Product
+
   const deleteProduct = async (item) => {
     try {
       setLoading(true);
-      await deleteProduct(doc(fireDB, "products", item.id));
+      await deleteDoc(doc(fireDB, "products", item.id));
       toast.success("Product Deleted successfully");
       setLoading(false);
       getProductData();
     } catch (error) {
-      toast.success("Product Deleted Falied");
+      // toast.success('Product Deleted Falied')
       setLoading(false);
     }
   };

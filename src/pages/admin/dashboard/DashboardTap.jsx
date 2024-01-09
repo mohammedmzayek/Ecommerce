@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 function DashboardTab() {
   const context = useContext(myContext);
-  const { mode, product, edithandle, updateProduct, deleteProduct } = context;
+  const { mode, product, edithandle, deleteProduct } = context;
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -173,7 +173,7 @@ function DashboardTab() {
                                     color: mode === "dark" ? "white" : "",
                                   }}
                                 >
-                                  <div>
+                                  <div onClick={() => deleteProduct(item)}>
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
@@ -190,7 +190,7 @@ function DashboardTab() {
                                     </svg>
                                   </div>
                                   <Link to={"/updateproduct"}>
-                                    <div>
+                                    <div onClick={edithandle(item)}>
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
