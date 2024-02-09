@@ -19,6 +19,7 @@ import UpdateProduct from "./pages/admin/Pages/UpdateProduct.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
+import Allproducts from "./pages/allproducts/AllProducs.jsx";
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/productinfo" element={<ProductInfo />} />
+          <Route path="/productinfo/:id" element={<ProductInfo />} />
           <Route
             path="/addproduct"
             element={
@@ -62,6 +63,8 @@ function App() {
             }
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/allproducts" element={<Allproducts />} />
+          allproducts
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer />
@@ -75,9 +78,10 @@ export default App;
 // user
 
 export const ProtectedRoutes = ({ children }) => {
-  if (localStorage.getItem("currentUser")) {
+  if (localStorage.getItem("user")) {
     return children;
   } else {
+    console.log(localStorage.getItem("user"));
     return <Navigate to="/login" />;
   }
 };

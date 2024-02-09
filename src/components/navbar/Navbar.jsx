@@ -221,6 +221,20 @@ export default function Navbar() {
                   >
                     All Products
                   </Link>
+
+                  {user ? (
+                    ""
+                  ) : (
+                    <div className="flow-root">
+                      <Link
+                        to={"/login"}
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  )}
                   {user ? (
                     <div className="flow-root">
                       <Link
